@@ -13,6 +13,7 @@
     </canvas>
     <input placeholder="Количество линий" type="text" class="lines_number">
     <button class="generate">Сгенерировать</button>
+    <a class="download">Скачать</a>
   </div>
   <script>
     window.onload = () => {
@@ -47,7 +48,8 @@
     };
 
     onBtnClick = () => {
-      const numOfLines = document.querySelector('.lines_number').value;      
+      const numOfLines = document.querySelector('.lines_number').value;
+      if(numOfLines == '') return;
       const c = document.getElementById("myCanvas");
       const ctx = c.getContext("2d");
       ctx.clearRect(0, 0, c.width, c.height);
@@ -68,8 +70,12 @@
         ctx.beginPath();
         ctx.moveTo(randX, randY);        
         ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y);
-        ctx.stroke();
+        ctx.stroke();        
       }
+      const btn = document.querySelector('.download');      
+      btn.classList.add('download_show');
+      btn.setAttribute('href', c.toDataURL());
+      btn.setAttribute('download', "random_curve.png"); 
     };
     
     function randomInteger(min, max) {
