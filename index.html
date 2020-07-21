@@ -53,20 +53,21 @@
       const c = document.getElementById("myCanvas");
       const ctx = c.getContext("2d");
       ctx.clearRect(0, 0, c.width, c.height);
+      ctx.strokeStyle = "#2d6";
+      ctx.fillStyle = "#abc"; 
 
       for(let i = 0; i < numOfLines; i++){
-        const randX = randomInteger(10, 450), randY = randomInteger(10, 10);
+        const randX = randomInteger(10, 450), randY = randomInteger(45, 45);
         
         const cp1x = randomInteger(10, 450),
-              cp1y = randomInteger(10, 450),
+              cp1y = randomInteger(50, 250),
               cp2x = randomInteger(10, 450),
-              cp2y = randomInteger(10, 450),
+              cp2y = randomInteger(250, 450),
               x = randomInteger(10, 450),
               y = randomInteger(450, 450);
-        
-        //ctx.strokeStyle = "#2d6";
-        //ctx.fillStyle = "#abc";        
-        //ctx.roundRect(randX, randY, 10, 10, 5, 50, true);        
+                      
+        //ctx.roundRect(randX, randY, 8, 8, 5, 1, true);        
+        //ctx.roundRect(x, y, 8, 8, 5, 1, true);        
         ctx.beginPath();
         ctx.moveTo(randX, randY);        
         ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y);
