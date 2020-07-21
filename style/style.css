@@ -4,7 +4,13 @@
 #myCanvas {
   display: block;
 }
-.lines_number, .generate {  
+.lines_number, .generate, .download {  
   margin-top: 10px;    
   padding: 10px;
+}
+.download {
+  visibility: hidden;
+}
+.download_show {
+  visibility: visible;
 }
