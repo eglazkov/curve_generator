@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style.css">  
+  <title>Curve generator</title>
+</head>
+<body>
+  <div class="viewport">
+    <canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;">
+      Your browser does not support the HTML5 canvas tag.
+    </canvas>
+    <input placeholder="Количество линий" type="text" class="lines_number">
+    <button class="generate">Сгенерировать</button>
+  </div>
+  <script>
+    window.onload = () => {
+      const btn = document.querySelector('.generate');
+      btn.addEventListener('click', onBtnClick);
+
+      CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius, fill, stroke) {
+          if (typeof stroke == "undefined") {
+              stroke = true;
+          }
+          if (typeof radius === "undefined") {
+              radius = 5;
+          }
+          this.beginPath();
+          this.moveTo(x + radius, y);
+          this.lineTo(x + width - radius, y);
+          this.quadraticCurveTo(x + width, y, x + width, y + radius);
+          this.lineTo(x + width, y + height - radius);
+          this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+          this.lineTo(x + radius, y + height);
+          this.quadraticCurveTo(x, y + height, x, y + height - radius);
+          this.lineTo(x, y + radius);
+          this.quadraticCurveTo(x, y, x + radius, y);
+          this.closePath();
+          if (stroke) {
+              this.stroke();
+          }
+          if (fill) {
+              this.fill();
+          }
+      };
+    };
+
+    onBtnClick = () => {
+      const numOfLines = document.querySelector('.lines_number').value;      
+      const c = document.getElementById("myCanvas");
+      const ctx = c.getContext("2d");
+      ctx.clearRect(0, 0, c.width, c.height);
+
+      for(let i = 0; i < numOfLines; i++){
+        const randX = randomInteger(10, 450), randY = randomInteger(10, 10);
+        
+        const cp1x = randomInteger(10, 450),
+              cp1y = randomInteger(10, 450),
+              cp2x = randomInteger(10, 450),
+              cp2y = randomInteger(10, 450),
+              x = randomInteger(10, 450),
+              y = randomInteger(450, 450);
+        
+        //ctx.strokeStyle = "#2d6";
+        //ctx.fillStyle = "#abc";        
+        //ctx.roundRect(randX, randY, 10, 10, 5, 50, true);        
+        ctx.beginPath();
+        ctx.moveTo(randX, randY);        
+        ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y);
+        ctx.stroke();
+      }
+    };
+    
+    function randomInteger(min, max) {
+      // получить случайное число от (min-0.5) до (max+0.5)
+      let rand = min - 0.5 + Math.random() * (max - min + 1);
+      return Math.round(rand);
+    }
+  </script>
+</body>
+</html>
